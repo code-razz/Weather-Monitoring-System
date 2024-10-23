@@ -23,10 +23,11 @@ function App() {
       <div className="grid grid-cols-3 gap-4">
         {weatherData.map((cityWeather, index) => (
           <div key={index} className="p-4 border rounded shadow">
-            <h2 className="text-xl">{cityWeather.name}</h2>
+            <h2 className="text-xl ">{cityWeather.name}</h2>
             <p>Temperature: {(cityWeather.main.temp - 273.15).toFixed(2)} °C</p>
             <p>Feels Like: {(cityWeather.main.feels_like - 273.15).toFixed(2)} °C</p>
             <p>Condition: {cityWeather.weather[0].main}</p>
+            <p>Unix Timestamp: {cityWeather.dt}</p>
           </div>
         ))}
       </div>
