@@ -2,7 +2,7 @@ import { AlertSettings } from "../schemas/alertSchema.js";
 import { Weather } from "../schemas/weatherSchema.js";
 
 async function checkAlerts() {
-    const latestWeather = await Weather.find().sort({ timestamp: -1 }).limit(2); // Check the latest 2 updates
+    const latestWeather = await Weather.find().sort({ timestamp: -1 }).limit(6); // Check the latest 2 updates
   
     latestWeather.forEach(async (weather) => {
       const alertSettings = await AlertSettings.findOne({ city: weather.city });

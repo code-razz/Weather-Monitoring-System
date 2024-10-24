@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import calculateDailySummary from './functions/calculateDailySummary.js';
 import checkAlerts from './functions/checkAlerts.js';
 import { Weather } from './schemas/weatherSchema.js';
+import { AlertSettings } from './schemas/alertSchema.js';
 
 dotenv.config();
 
@@ -14,10 +15,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGODB_URI);
 
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -26,6 +24,8 @@ db.once('open', () => {
 });
 
 app.use(cors());
+app.use(express.json()); // Important: To parse incoming JSON requests
+
 
 const cities = ['Delhi', 'Mumbai', 'Chennai', 'Bangalore', 'Kolkata', 'Hyderabad'];
 
@@ -55,6 +55,28 @@ app.get('/weather', async (req, res) => {
     res.status(500).send('Error retrieving weather data');
   }
 });
+
+app.post('/alerts', async (req, res) => {
+  const alertCondition = req.body;
+
+  try {
+    // Find an existing alert for the city and update it, or create a new one if it doesn't exist
+    const alert = await AlertSettings.findOneAndUpdate(
+      { city: alertCondition.city },  // Query to find the alert by city
+      {                               // Fields to update or set
+        threshold: alertCondition.temperatureThreshold,
+        condition: alertCondition.conditionThreshold,
+      },
+      { new: true, upsert: true }      // Options: upsert creates a new document if none exists, new returns the updated document
+    );
+
+    res.status(200).send('Alert settings saved or updated successfully');
+  } catch (error) {
+    res.status(500).send('Error saving alert settings');
+  }
+});
+
+
 
 
 
