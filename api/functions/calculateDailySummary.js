@@ -1,9 +1,5 @@
-import mongoose from "mongoose";
-import dailySummarySchema from "../schemas/dailySummarySchema.js";
-import weatherSchema from "../schemas/weatherSchema.js";
-
-const Weather = mongoose.model('Weather', weatherSchema);
-const DailySummary = mongoose.model('DailySummary', dailySummarySchema);
+import { DailySummary } from "../schemas/dailySummarySchema.js";
+import { Weather } from "../schemas/weatherSchema.js";
 
 async function calculateDailySummary() {
     const dailyWeather = await Weather.aggregate([

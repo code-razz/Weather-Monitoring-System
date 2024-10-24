@@ -4,9 +4,9 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cron from 'node-cron';
 import mongoose from 'mongoose';
-import weatherSchema from './schemas/weatherSchema.js';
-import dailySummarySchema from './schemas/dailySummarySchema.js';
 import calculateDailySummary from './functions/calculateDailySummary.js';
+import checkAlerts from './functions/checkAlerts.js';
+import { Weather } from './schemas/weatherSchema.js';
 
 dotenv.config();
 
@@ -19,16 +19,11 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 });
 
-const db = mongoose.connection;
+const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB');
 });
-
-// Define a schema and model for weather data
-
-const Weather = mongoose.model('Weather', weatherSchema);
-const DailySummary = mongoose.model('DailySummary', dailySummarySchema);
 
 app.use(cors());
 
@@ -50,6 +45,8 @@ app.get('/weather', async (req, res) => {
       });
 
       await weather.save();
+      // Check alerts after fetching weather data
+      await checkAlerts();
 
       return data;
     }));

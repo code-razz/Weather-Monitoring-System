@@ -9,4 +9,6 @@ const dailySummarySchema = new mongoose.Schema({
     dominantCondition: String,
   });
 
+const DailySummary = mongoose.model('DailySummary', dailySummarySchema);
+export {DailySummary}
 export default dailySummarySchema

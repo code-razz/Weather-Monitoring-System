@@ -2,18 +2,17 @@ import React, { useEffect, useState } from 'react';
 
 function App() {
   const [weatherData, setWeatherData] = useState([]);
+  const fetchWeatherData = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/weather');
+      const data = await response.json();
+      setWeatherData(data);
+    } catch (error) {
+      console.log('Error fetching weather data:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchWeatherData = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/weather');
-        const data = await response.json();
-        setWeatherData(data);
-      } catch (error) {
-        console.error('Error fetching weather data:', error);
-      }
-    };
-
     fetchWeatherData();
   }, []);
 

@@ -8,5 +8,8 @@ const weatherSchema = new mongoose.Schema({
     timestamp: Number,
   });
 
-export default weatherSchema
   
+const Weather = mongoose.model('Weather', weatherSchema);
+export {Weather}
+
+export default weatherSchema
