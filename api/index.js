@@ -31,41 +31,58 @@ const cities = ['Delhi', 'Mumbai', 'Chennai', 'Bangalore', 'Kolkata', 'Hyderabad
 
 app.get('/weather', async (req, res) => {
   try {
+    // Fetch and save weather data for each city
     const weatherData = await Promise.all(cities.map(async (city) => {
-      const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.OPENWEATHER_API_KEY}`);
-      const data = response.data;
+      try {
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.OPENWEATHER_API_KEY}`);
+        const data = response.data;
+        
+        const date = new Date(data.dt * 1000);
+        const weather = new Weather({
+          city: data.name,
+          temperature: data.main.temp,
+          feels_like: data.main.feels_like,
+          condition: data.weather[0].main,
+          timestamp: data.dt,
+          Local_TS: date.toLocaleString(),
+        });
 
-      // Save data to MongoDB
-      const weather = new Weather({
-        city: data.name,
-        temperature: data.main.temp,
-        feels_like: data.main.feels_like,
-        condition: data.weather[0].main,
-        timestamp: data.dt,
-      });
-
-      await weather.save();
-      // Check alerts after fetching weather data
-      await checkAlerts();
-
-      return data;
+        await weather.save(); // Ensure save is complete
+        return data;
+      } catch (err) {
+        console.error(`Error saving weather data for ${city}:`, err);
+        return null; // Return null for failed saves
+      }
     }));
-    res.json(weatherData);
+
+    // Filter out any null entries from failed saves
+    const successfulWeatherData = weatherData.filter(data => data !== null);
+
+    // Call checkAlerts only after all saves are done
+    console.log("All weather data saved, starting alert checks...");
+    await checkAlerts();
+    console.log("Alert checks complete");
+
+    res.json(successfulWeatherData);
   } catch (error) {
+    console.error('Error retrieving weather data:', error);
     res.status(500).send('Error retrieving weather data');
   }
 });
 
+
 app.post('/alerts', async (req, res) => {
   const alertCondition = req.body;
-
+  
   try {
+    // console.log("kdfjkf")
+    // console.log(typeof alertCondition.temperatureThreshold)
     // Find an existing alert for the city and update it, or create a new one if it doesn't exist
     const alert = await AlertSettings.findOneAndUpdate(
       { city: alertCondition.city },  // Query to find the alert by city
       {                               // Fields to update or set
-        threshold: alertCondition.temperatureThreshold,
-        condition: alertCondition.conditionThreshold,
+        threshold: (Number(alertCondition.temperatureThreshold)+273.15),
+        emailId: alertCondition.emailId,
       },
       { new: true, upsert: true }      // Options: upsert creates a new document if none exists, new returns the updated document
     );

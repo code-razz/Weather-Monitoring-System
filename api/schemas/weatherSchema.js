@@ -6,6 +6,7 @@ const weatherSchema = new mongoose.Schema({
     feels_like: Number,
     condition: String,
     timestamp: Number,
+    Local_TS: String,
   });
 
   

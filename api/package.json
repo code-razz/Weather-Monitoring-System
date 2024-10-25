@@ -12,12 +12,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
+    "@emailjs/nodejs": "^5.0.2",
     "axios": "^1.7.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "emailjs": "^4.0.3",
     "express": "^4.21.1",
     "mongoose": "^8.7.2",
-    "node-cron": "^3.0.3"
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.15"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"

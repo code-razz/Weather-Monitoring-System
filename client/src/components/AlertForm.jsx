@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const AlertForm = () => {
   const [temperatureThreshold, setTemperatureThreshold] = useState('');
-  const [conditionThreshold, setConditionThreshold] = useState('');
+  const [emailId, setEmailId] = useState('');
   const [city, setCity] = useState(''); // New state for the city
 
   const handleSubmit = async (e) => {
@@ -12,7 +12,7 @@ const AlertForm = () => {
     const alertData = {
       city: city.trim(),
       temperatureThreshold: temperatureThreshold.trim(),
-      conditionThreshold: conditionThreshold.trim(),
+      emailId: emailId,
     };
 
     console.log('Submitting data:', alertData);  // For debugging
@@ -20,6 +20,7 @@ const AlertForm = () => {
     try {
       await axios.post('http://localhost:5000/alerts', alertData);
       alert('Alert settings saved!');
+      window.location.reload();
     } catch (error) {
       console.error('Error saving alert settings:', error);
     }
@@ -55,12 +56,12 @@ const AlertForm = () => {
       </div>
 
       <div>
-        <label htmlFor="conditionThreshold" className="block text-sm font-medium text-gray-700">Weather Condition</label>
+        <label htmlFor="Email" className="block text-sm font-medium text-gray-700">Email Address</label>
         <input
-          type="text"
-          id="conditionThreshold"
-          value={conditionThreshold}
-          onChange={(e) => setConditionThreshold(e.target.value)}
+          type="email"
+          id="emailId"
+          value={emailId}
+          onChange={(e) => setEmailId(e.target.value)}
           required
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
