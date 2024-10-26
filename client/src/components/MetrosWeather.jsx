@@ -17,16 +17,29 @@ function MetrosWeather() {
   }, []);
 
   return (
-    <div className="App max-w-7xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
-      <h1 className="text-2xl font-bold">Weather Monitoring System</h1>
-      <div className="grid grid-cols-3 gap-4">
+    <div className="max-w-7xl mx-auto mt-10 p-8 bg-white shadow-lg rounded-lg">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center border-b pb-4">
+        Weather Monitoring System
+      </h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {weatherData.map((cityWeather, index) => (
-          <div key={index} className="p-4 border rounded shadow">
-            <h2 className="text-xl ">{cityWeather.name}</h2>
-            <p>Temperature: {(cityWeather.main.temp - 273.15).toFixed(2)} °C</p>
-            <p>Feels Like: {(cityWeather.main.feels_like - 273.15).toFixed(2)} °C</p>
-            <p>Condition: {cityWeather.weather[0].main}</p>
-            <p>Unix Timestamp: {cityWeather.dt}</p>
+          <div
+            key={index}
+            className="p-6 border border-gray-200 rounded-lg shadow-sm bg-gray-50 transition-transform transform hover:scale-105 hover:shadow-md"
+          >
+            <h2 className="text-xl font-semibold text-gray-700 mb-2">{cityWeather.name}</h2>
+            <p className="text-gray-600">
+              <span className="font-medium">Temperature:</span> {(cityWeather.main.temp - 273.15).toFixed(2)} °C
+            </p>
+            <p className="text-gray-600">
+              <span className="font-medium">Feels Like:</span> {(cityWeather.main.feels_like - 273.15).toFixed(2)} °C
+            </p>
+            <p className="text-gray-600">
+              <span className="font-medium">Condition:</span> {cityWeather.weather[0].main}
+            </p>
+            <p className="text-gray-500 text-sm italic">
+              <span className="font-medium">Unix Timestamp:</span> {cityWeather.dt}
+            </p>
           </div>
         ))}
       </div>
