@@ -35,7 +35,9 @@ The Weather Monitoring System is a full-stack application designed to fetch, sto
 - **Alert Management**: Users can create, update, and manage alert settings through the application interface.
 
 These functionalities make the Weather Monitoring System a comprehensive tool for monitoring and analyzing weather data.
-  
+
+https://github.com/user-attachments/assets/d2420ea2-8a96-40ee-afff-ce51a30a4ff4
+
 
 ## Prerequisites
 
