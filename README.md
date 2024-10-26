@@ -12,6 +12,10 @@ The Weather Monitoring System is a full-stack application designed to fetch, sto
 - [Contributing](#contributing)
 - [License](#license)
 
+## NOTE: 
+- The UI is made simple as I have put more effort on building the functionality of the application.
+- There are some unnecessary comments which was used while development (for testing and other purposes) and will be cleared.
+
 ## Features
 
 -  **Real-time Weather Data Fetching**: The application fetches real-time weather data for major cities using the [OpenWeather API](https://openweathermap.org/api).
