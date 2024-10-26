@@ -14,11 +14,24 @@ The Weather Monitoring System is a full-stack application designed to fetch, sto
 
 ## Features
 
-- Fetches real-time weather data for major cities using the OpenWeather API.
-- Stores weather data in a MongoDB database.
-- Allows users to set temperature alerts and receive email notifications.
-- Displays weather trends using interactive charts.
-- Provides a user-friendly interface for managing alerts and viewing weather data.
+-  **Real-time Weather Data Fetching**: The application fetches real-time weather data for major cities using the [OpenWeather API](https://openweathermap.org/api).
+
+- **Data Storage**: Weather data is stored in a [MongoDB](https://www.mongodb.com/) database, allowing for historical data analysis and trend tracking.
+
+- **Temperature Alerts**: Users can set temperature alerts for specific cities. If the temperature exceeds the set threshold, an email notification is sent to the user.
+
+- **Weather Trends Visualization**: The application displays weather trends over time using interactive charts, providing a visual representation of temperature changes and conditions.
+
+- **User Interface**: A user-friendly interface is provided for managing alerts, viewing current weather data, and analyzing weather trends.
+
+- **Daily Weather Summary**: The system calculates and stores daily summaries of weather data, including average, maximum, and minimum temperatures, as well as the dominant weather condition for each city.
+
+- **Scheduled Data Fetching**: Weather data is automatically fetched every hour, and daily summaries are calculated at midnight using scheduled tasks.
+
+- **Alert Management**: Users can create, update, and manage alert settings through the application interface.
+
+These functionalities make the Weather Monitoring System a comprehensive tool for monitoring and analyzing weather data.
+  
 
 ## Prerequisites
 
