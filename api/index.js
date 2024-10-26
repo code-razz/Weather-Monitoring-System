@@ -8,6 +8,7 @@ import calculateDailySummary from './functions/calculateDailySummary.js';
 import checkAlerts from './functions/checkAlerts.js';
 import { Weather } from './schemas/weatherSchema.js';
 import { AlertSettings } from './schemas/alertSchema.js';
+import { DailySummary } from './schemas/dailySummarySchema.js';
 
 dotenv.config();
 
@@ -92,6 +93,16 @@ app.post('/alerts', async (req, res) => {
     res.status(500).send('Error saving alert settings');
   }
 });
+
+app.get('/daily-summary', async (req, res) => {
+  try {
+    const summaries = await DailySummary.find();
+    res.json(summaries);
+  } catch (error) {
+    res.status(500).send('Error retrieving daily summary data');
+  }
+});
+
 
 
 
