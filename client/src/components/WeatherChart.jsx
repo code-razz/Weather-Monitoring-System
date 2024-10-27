@@ -21,10 +21,14 @@ const WeatherChart = () => {
     }
   };
 
-  // Filter data based on selected city
+  // Filter and sort data based on selected city
   useEffect(() => {
     if (selectedCity) {
-      setFilteredSummary(dailySummary.filter((summary) => summary.city === selectedCity));
+      const filtered = dailySummary.filter((summary) => summary.city === selectedCity);
+      const sorted = filtered.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort by date
+      setFilteredSummary(sorted);
+    } else {
+      setFilteredSummary([]); // Clear when no city is selected
     }
   }, [selectedCity, dailySummary]);
 

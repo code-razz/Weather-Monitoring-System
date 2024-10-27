@@ -25,9 +25,9 @@ const sendAlertEmail = async (email, city, temperature, condition) => {
     // from: process.env.EMAIL_USER,
     to_email: email, // The user's email
     subject: `Weather Alert for ${city}`,
-    message: `Alert: The temperature in ${city} has reached ${temperature-273.15}°C with ${condition} conditions.`,
+    message: `Alert: The temperature in ${city} has reached ${(temperature - 273.15).toFixed(2)}°C with ${condition} conditions.`,
     reply_to: 'rajsah5556@gmail.com'
-  }; 
+  };  
   // console.log(mailOptions)
   emailjs.send('rajsah5556', 'WMS-service', mailOptions).then(
     (response) => {

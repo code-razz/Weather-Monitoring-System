@@ -26,36 +26,41 @@ async function calculateDailySummary() {
         }
       }
     ]);
-  
-    // Calculate the dominant condition in Node.js
-    const processedWeatherData = dailyWeather.map(entry => {
+
+    // Calculate the dominant condition and prepare entries for upsert
+    const updates = dailyWeather.map(entry => {
       const conditionCounts = {};
       let dominantCondition = '';
-  
+
       // Count the frequency of each weather condition
       entry.conditions.forEach(condition => {
         conditionCounts[condition] = (conditionCounts[condition] || 0) + 1;
       });
-  
+
       // Find the condition with the highest frequency
       dominantCondition = Object.keys(conditionCounts).reduce((a, b) =>
         conditionCounts[a] > conditionCounts[b] ? a : b
       );
-  
-      // Return the processed entry with the dominant condition
+
+      // Prepare the upsert operation
       return {
-        city: entry.city,
-        date: entry.date,
-        avgTemperature: entry.avgTemperature,
-        maxTemperature: entry.maxTemperature,
-        minTemperature: entry.minTemperature,
-        dominantCondition: dominantCondition
+        updateOne: {
+          filter: { city: entry.city, date: entry.date },
+          update: {
+            city: entry.city,
+            date: entry.date,
+            avgTemperature: entry.avgTemperature,
+            maxTemperature: entry.maxTemperature,
+            minTemperature: entry.minTemperature,
+            dominantCondition: dominantCondition
+          },
+          upsert: true
+        }
       };
     });
-  
-    // Save the processed daily summaries to MongoDB
-    await DailySummary.insertMany(processedWeatherData);
-  }
 
+    // Perform bulk upsert to save or replace existing entries
+    await DailySummary.bulkWrite(updates);
+}
 
-export default calculateDailySummary
+export default calculateDailySummary;

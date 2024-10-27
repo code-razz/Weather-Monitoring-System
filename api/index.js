@@ -64,6 +64,9 @@ app.get('/weather', async (req, res) => {
     await checkAlerts();
     console.log("Alert checks complete");
 
+    //NOTE:caluate daily summary each time weather data is fetched from api server. (using node-cron do it at every midnight)
+    calculateDailySummary();
+
     res.json(successfulWeatherData);
   } catch (error) {
     console.error('Error retrieving weather data:', error);
@@ -106,10 +109,6 @@ app.get('/daily-summary', async (req, res) => {
 
 
 
-
-
-
-// calculateDailySummary();
 // Schedule daily aggregation at midnight
 cron.schedule('0 0 * * *', () => {
   console.log('Calculating daily weather summary');
