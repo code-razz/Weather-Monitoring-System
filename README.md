@@ -10,17 +10,21 @@ The Weather Monitoring System is a full-stack application designed to fetch, sto
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## NOTE: 
 - The UI is made simple as I have put more effort on building the functionality of the application.
 - There are some unnecessary comments which was used while development (for testing and other purposes) and will be cleared.
+- If it is the 1st time you run this, the dailyAverage data will have only one day data, so it might not show as usual. When the app is run multiple days, the chart will look like this:
+  ![image](https://github.com/user-attachments/assets/8f75398e-383e-43f1-9b99-028a1cf71214)
+
 
 ## Features
 
 -  **Real-time Weather Data Fetching**: The application fetches real-time weather data for major cities using the [OpenWeather API](https://openweathermap.org/api).
 
 - **Data Storage**: Weather data is stored in a [MongoDB](https://www.mongodb.com/) database, allowing for historical data analysis and trend tracking.
+
+- **Scheduled Data Fetching**: Weather data is automatically fetched every hour, and daily summaries are calculated at midnight using scheduled tasks.
 
 - **Temperature Alerts**: Users can set temperature alerts for specific cities. If the temperature exceeds the set threshold, an email notification is sent to the user.
 
@@ -29,8 +33,6 @@ The Weather Monitoring System is a full-stack application designed to fetch, sto
 - **User Interface**: A user-friendly interface is provided for managing alerts, viewing current weather data, and analyzing weather trends.
 
 - **Daily Weather Summary**: The system calculates and stores daily summaries of weather data, including average, maximum, and minimum temperatures, as well as the dominant weather condition for each city.
-
-- **Scheduled Data Fetching**: Weather data is automatically fetched every hour, and daily summaries are calculated at midnight using scheduled tasks.
 
 - **Alert Management**: Users can create, update, and manage alert settings through the application interface.
 
